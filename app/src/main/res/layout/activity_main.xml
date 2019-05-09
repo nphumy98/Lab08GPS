@@ -35,4 +35,10 @@
         android:text="Get Device Location"
         android:layout_below="@+id/isGPSEnabledButton"
         android:onClick="getGPSButtonOnclick"/>
+
+    <TextView
+        android:id="@+id/informationTextView"
+        android:layout_width="match_parent"
+        android:layout_height="224dp"
+        android:layout_below="@id/getGPSButton" />
 </RelativeLayout>
