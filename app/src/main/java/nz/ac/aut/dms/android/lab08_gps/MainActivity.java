@@ -2,7 +2,6 @@ package nz.ac.aut.dms.android.lab08_gps;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -10,7 +9,6 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,33 +31,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         informationTextView= (TextView) findViewById(R.id.informationTextView);
-
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationProviders = locationManager.GPS_PROVIDER;
-        //make the location listener
-        locationListener= new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Log.d("GPSApp","Location: "+location.toString());
-                informationTextView.setText(location.toString());
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-                Toast.makeText(getApplicationContext(), "GPS location providers has been enabled", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Toast.makeText(getApplicationContext(), "GPS location providers has been disabled", Toast.LENGTH_SHORT).show();
-
-            }
-        };
         //check for permission
         if (!hasPermission(this, permissionList)) {
             ActivityCompat.requestPermissions(this, permissionList, all_permission_code);
@@ -118,20 +89,12 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, all_permission_code);
             return;
         }
-
-        //update the location
-        locationManager.requestLocationUpdates(locationProviders, 0, 0, locationListener);
-    }
-
-    //if the app stop then remove the locationListener to free resource
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if(locationManager!=null)
+        //get the location
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        // if location is not null then print out
+        if (location!=null)
         {
-            locationManager.removeUpdates(locationListener);
+            informationTextView.setText("Your current Location:"+ location.toString());
         }
     }
-
 }
