@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
-    private LocationListener locationListener;
     private String locationProviders;
     private TextView informationTextView;
     private final int all_permission_code = 1;
@@ -56,12 +55,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void getLocationManager(View view) {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        Toast.makeText(this, "Location Manager has been created", Toast.LENGTH_SHORT).show();
+        if (locationManager!=null)
+        {
+            Toast.makeText(this, "Location Manager has been created", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Fail to get Location Manager", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void getGPSProviderButtonOnclick(View view) {
         locationProviders = locationManager.GPS_PROVIDER;
-        Toast.makeText(this, "GPS location providers has been get", Toast.LENGTH_SHORT).show();
+        if (locationProviders!=null)
+        {
+            Toast.makeText(this, "GPS location providers has been get", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Fail to get GPS Location Provider", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void isGPSEnabledButtonOnclick(View view) {
@@ -89,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, all_permission_code);
             return;
         }
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationProviders = locationManager.GPS_PROVIDER;
         //get the location
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         // if location is not null then print out
