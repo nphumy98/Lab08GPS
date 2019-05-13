@@ -67,16 +67,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getGPSProviderButtonOnclick(View view) {
-        locationProviders = locationManager.GPS_PROVIDER;
-        if (locationProviders!=null)
+        if (locationManager!=null)
         {
-            Toast.makeText(this, "GPS location providers has been get", Toast.LENGTH_SHORT).show();
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(
+                    LocationManager.NETWORK_PROVIDER);
+            boolean isGPSEnabled = locationManager.isProviderEnabled(
+                    LocationManager.GPS_PROVIDER);
+            if(isNetworkEnabled==true&&isGPSEnabled==true)
+            {
+                //get GPS location provider
+                locationProviders = locationManager.GPS_PROVIDER;
+                Toast.makeText(this, "GPS and Network Provider are both available", Toast.LENGTH_SHORT).show();
+            }
+            else if (isNetworkEnabled)
+            {
+                //get GPS location provider
+                locationProviders = locationManager.NETWORK_PROVIDER;
+                Toast.makeText(this, "Network Provider is available", Toast.LENGTH_SHORT).show();
+            }
+            else if (isGPSEnabled)
+            {
+                //get GPS location provider
+                locationProviders = locationManager.GPS_PROVIDER;
+                Toast.makeText(this, "GPS Provider is available", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(this, "No Providers is available", Toast.LENGTH_SHORT).show();
+            }
+
+
+
         }
         else
         {
-            Toast.makeText(this, "Fail to get GPS Location Provider", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please get locationManager", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void isGPSEnabledButtonOnclick(View view) {
