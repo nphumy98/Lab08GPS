@@ -137,14 +137,18 @@ public class MainActivity extends AppCompatActivity {
         // if location is not null then print out
         if (location!=null)
         {
-            informationTextView.setText("Your current Location:"+ location.toString());
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            informationTextView.setText("Your current Location: Latitude: "+latitude+" Longtitude: "+longitude);
         }
         else
         {
             Log.d("GPS Provider ","is available but the slow response from satellites");
             locationProviders = locationManager.NETWORK_PROVIDER;
             location = locationManager.getLastKnownLocation(locationProviders);
-            informationTextView.setText("Your current Location:"+ location.toString());
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            informationTextView.setText("Your current Location: Latitude: "+latitude+" Longtitude: "+longitude);
         }
     }
 }
