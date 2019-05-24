@@ -9,6 +9,7 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "No Providers is available", Toast.LENGTH_SHORT).show();
             }
 
-
-
         }
         else
         {
@@ -133,10 +132,18 @@ public class MainActivity extends AppCompatActivity {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationProviders = locationManager.GPS_PROVIDER;
         //get the location
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location = locationManager.getLastKnownLocation(locationProviders);
+
         // if location is not null then print out
         if (location!=null)
         {
+            informationTextView.setText("Your current Location:"+ location.toString());
+        }
+        else
+        {
+            Log.d("GPS Provider ","is available but the slow response from satellites");
+            locationProviders = locationManager.NETWORK_PROVIDER;
+            location = locationManager.getLastKnownLocation(locationProviders);
             informationTextView.setText("Your current Location:"+ location.toString());
         }
     }
