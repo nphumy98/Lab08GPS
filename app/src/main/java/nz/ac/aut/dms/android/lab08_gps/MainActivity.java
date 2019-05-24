@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (locationManager!=null)
         {
-            Toast.makeText(this, "Location Manager has been created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location Manager is available", Toast.LENGTH_SHORT).show();
         }
         else
         {
